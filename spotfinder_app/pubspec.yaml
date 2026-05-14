@@ -1,0 +1,24 @@
+name: spotfinder_app
+description: "Intelligent Smart City Access - Parking System"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  # Agrega aquí paquetes futuros como google_maps_flutter o pinput
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  # Si vas a usar la imagen del onboarding, descomenta esto:
+  # assets:
+  #   - assets/images/smart_access.png

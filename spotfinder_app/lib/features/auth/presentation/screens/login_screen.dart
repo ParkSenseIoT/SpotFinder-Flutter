@@ -4,8 +4,55 @@ import '../../../../core/widgets/neon_button.dart';
 import 'verification_screen.dart'; 
 import 'register_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // Controladores para capturar el texto
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _handleLogin() {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    // Validación Fase 1
+    if (email.isEmpty || !email.contains('@')) {
+      _showError("Please enter a valid Email Identifier");
+      return;
+    }
+    if (password.isEmpty || password.length < 6) {
+      _showError("Access Protocol must be at least 6 characters");
+      return;
+    }
+
+    // Si todo es correcto, procedemos
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => const VerificationScreen()),
+    );
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.redAccent,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +78,18 @@ class LoginScreen extends StatelessWidget {
               style: TextStyle(color: AppColors.textGray),
             ),
             const SizedBox(height: 40),
-            _buildTextField("Email Identifier", Icons.alternate_email),
+            _buildTextField("Email Identifier", Icons.alternate_email, _emailController),
             const SizedBox(height: 20),
-            _buildTextField("Access Protocol", Icons.lock_outline, isPassword: true),
+            _buildTextField("Access Protocol", Icons.lock_outline, _passwordController, isPassword: true),
             const SizedBox(height: 30),
             
-            // EL BOTÓN: Se eliminó el paréntesis sobrante que causaba el error de identifier
             NeonButton(
               text: "Establish Connection",
-              onPressed: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => const VerificationScreen()),
-                );
-              },
+              onPressed: _handleLogin,
             ),
 
             const SizedBox(height: 20),
             
-            // Link para Registro para completar el flujo
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -72,8 +112,9 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(String hint, IconData icon, {bool isPassword = false}) {
+  Widget _buildTextField(String hint, IconData icon, TextEditingController controller, {bool isPassword = false}) {
     return TextField(
+      controller: controller,
       obscureText: isPassword,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(

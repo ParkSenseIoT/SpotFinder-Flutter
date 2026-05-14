@@ -10,7 +10,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  # Agrega aquí paquetes futuros como google_maps_flutter o pinput
 
 dev_dependencies:
   flutter_test:
@@ -19,6 +18,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # Si vas a usar la imagen del onboarding, descomenta esto:
-  # assets:
-  #   - assets/images/smart_access.png

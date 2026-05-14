@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/neon_button.dart';
 import 'verification_screen.dart';
+import 'login_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -57,6 +58,9 @@ class OnboardingScreen extends StatelessWidget {
   }
 
   void _navigateToLogin(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const VerificationScreen()));
-  }
+  Navigator.push(
+    context, 
+    MaterialPageRoute(builder: (context) => const LoginScreen()),
+  );
+}
 }

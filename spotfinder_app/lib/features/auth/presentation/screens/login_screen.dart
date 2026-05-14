@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/neon_button.dart'; // Importamos el botón global
+import '../../../../core/widgets/neon_button.dart';
+import 'verification_screen.dart'; 
+import 'register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -33,12 +35,36 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
             _buildTextField("Access Protocol", Icons.lock_outline, isPassword: true),
             const SizedBox(height: 30),
-            // Usamos el widget global que ya tiene la corrección de .withValues()
+            
+            // EL BOTÓN: Se eliminó el paréntesis sobrante que causaba el error de identifier
             NeonButton(
               text: "Establish Connection",
               onPressed: () {
-                // Navegación al dashboard o siguiente flujo
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const VerificationScreen()),
+                );
               },
+            ),
+
+            const SizedBox(height: 20),
+            
+            // Link para Registro para completar el flujo
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                );
+              },
+              child: const Text(
+                "New operative? Initialize Profile",
+                style: TextStyle(
+                  color: AppColors.primaryNeon,
+                  fontWeight: FontWeight.w600,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
             ),
           ],
         ),

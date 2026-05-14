@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/neon_button.dart';
+import '../screens/main_navigation_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -27,11 +28,17 @@ class RegisterScreen extends StatelessWidget {
             _buildInputField("PHONE NUMBER", Icons.phone_android_outlined),
             const SizedBox(height: 40),
             NeonButton(
-              text: "INITIALIZE REGISTRATION", 
-              onPressed: () {
-                // Aquí navegarías a la pantalla de verificación (PIN)
-              },
-            ),
+  text: "INITIALIZE REGISTRATION", 
+  onPressed: () {
+    // 1. Aquí iría la lógica para guardar FULL NAME, EMAIL y PHONE
+    // 2. Navegamos al Dashboard eliminando el historial anterior
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const MainNavigationScreen()),
+      (route) => false, // Esto evita que el usuario regrese al registro con el botón "atrás"
+    );
+  },
+),
           ],
         ),
       ),

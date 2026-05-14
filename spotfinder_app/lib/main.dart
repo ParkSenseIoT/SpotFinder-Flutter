@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'features/auth/presentation/screens/login_screen.dart';
 import 'core/theme/app_colors.dart';
+import 'features/auth/presentation/screens/splash_screen.dart';
 
 void main() {
   runApp(const SpotFinderApp());
@@ -17,9 +17,10 @@ class SpotFinderApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: AppColors.background,
+        // Aplicando consistencia visual mobile-first
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // Aquí decides qué pantalla ver primero para probar
-      home: const LoginScreen(), 
+      home: const SplashScreen(), 
     );
   }
 }

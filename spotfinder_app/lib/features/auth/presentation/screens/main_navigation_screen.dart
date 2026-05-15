@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../notifications/presentation/controllers/notifications_controller.dart';
 import '../../../notifications/presentation/screens/notification_center_screen.dart';
 import '../../../notifications/presentation/widgets/unread_badge.dart';
@@ -20,22 +21,9 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  Widget _placeholder(String label, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: AppColors.primaryNeon, size: 60),
-          const SizedBox(height: 12),
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 18)),
-          const SizedBox(height: 8),
-          const Text(
-            'Coming soon',
-            style: TextStyle(color: AppColors.textGray),
-          ),
-        ],
-      ),
-    );
+  void _switchTab(int index) {
+    if (!mounted) return;
+    setState(() => _selectedIndex = index);
   }
 
   @override
@@ -43,7 +31,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final user = context.watch<AuthController>().user;
 
     final screens = <Widget>[
-      _placeholder('Dashboard', Icons.dashboard_outlined),
+      DashboardScreen(onSwitchToTab: _switchTab),
       const ParkingMapScreen(),
       const PaymentsScreen(showAppBar: false),
       const NotificationCenterScreen(showAppBar: false, embedded: true),

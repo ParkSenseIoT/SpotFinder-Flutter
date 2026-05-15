@@ -11,6 +11,7 @@ import '../models/occupancy_summary_model.dart';
 
 /// Lightweight push from the backend describing a slot status change.
 /// Mirrors the payload broadcast on `/topic/slots`.
+///
 class SlotStatusPush {
   const SlotStatusPush({
     required this.slotId,

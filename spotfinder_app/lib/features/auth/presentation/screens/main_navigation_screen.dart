@@ -7,6 +7,7 @@ import '../../../notifications/presentation/screens/notification_center_screen.d
 import '../../../notifications/presentation/screens/notification_preferences_screen.dart';
 import '../../../notifications/presentation/widgets/unread_badge.dart';
 import '../../../parking/presentation/screens/parking_map_screen.dart';
+import '../../../payments/presentation/screens/payments_screen.dart';
 import '../controllers/auth_controller.dart';
 import 'login_screen.dart';
 
@@ -151,7 +152,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final screens = <Widget>[
       _placeholder('Dashboard', Icons.dashboard_outlined),
       const ParkingMapScreen(),
-      _placeholder('Payments', Icons.payment_outlined),
+      const PaymentsScreen(showAppBar: false),
       const NotificationCenterScreen(showAppBar: false, embedded: true),
       _settingsPanel(context),
     ];

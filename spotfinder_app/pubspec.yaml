@@ -11,6 +11,15 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.6
 
+  # HTTP client for talking to the SpotFinder backend
+  dio: ^5.4.0
+
+  # Secure storage for JWT token persistence
+  flutter_secure_storage: ^9.0.0
+
+  # Simple state management
+  provider: ^6.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

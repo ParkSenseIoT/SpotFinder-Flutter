@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../notifications/presentation/controllers/notifications_controller.dart';
+import '../../../notifications/presentation/screens/notification_center_screen.dart';
+import '../../../notifications/presentation/screens/notification_preferences_screen.dart';
+import '../../../notifications/presentation/widgets/unread_badge.dart';
 import '../../../parking/presentation/screens/parking_map_screen.dart';
 import '../controllers/auth_controller.dart';
 import 'login_screen.dart';
@@ -48,6 +52,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             _row(Icons.badge_outlined, 'Name', user?.fullName ?? '—'),
             _row(Icons.alternate_email, 'Email', user?.email ?? '—'),
             _row(Icons.shield_outlined, 'Roles', user?.roles.join(', ') ?? '—'),
+            const SizedBox(height: 24),
+            _menuTile(
+              context,
+              icon: Icons.notifications_active_outlined,
+              label: 'Preferencias de notificaciones',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const NotificationPreferencesScreen(),
+                ),
+              ),
+            ),
             const Spacer(),
             SizedBox(
               width: double.infinity,
@@ -97,17 +113,50 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     );
   }
 
+  Widget _menuTile(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        decoration: BoxDecoration(
+          color: AppColors.surfaceDark,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.primaryNeon.withOpacity(0.25)),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColors.primaryNeon),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Text(label,
+                  style: const TextStyle(color: Colors.white, fontSize: 15)),
+            ),
+            const Icon(Icons.chevron_right, color: AppColors.textGray),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<AuthController>().user;
+
     final screens = <Widget>[
       _placeholder('Dashboard', Icons.dashboard_outlined),
       const ParkingMapScreen(),
       _placeholder('Payments', Icons.payment_outlined),
-      _placeholder('Alerts', Icons.notifications_outlined),
+      const NotificationCenterScreen(showAppBar: false, embedded: true),
       _settingsPanel(context),
     ];
 
-    return Scaffold(
+    final scaffold = Scaffold(
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -116,14 +165,36 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         backgroundColor: AppColors.surfaceDark,
         selectedItemColor: AppColors.primaryNeon,
         unselectedItemColor: AppColors.textGray,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
-          BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Map'),
-          BottomNavigationBarItem(icon: Icon(Icons.payment_outlined), label: 'Payments'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications_outlined), label: 'Alerts'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings_outlined), label: 'Settings'),
+        items: [
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.dashboard_outlined), label: 'Dashboard'),
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.map_outlined), label: 'Map'),
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.payment_outlined), label: 'Payments'),
+          BottomNavigationBarItem(
+            icon: user == null
+                ? const Icon(Icons.notifications_outlined)
+                : Consumer<NotificationsController>(
+                    builder: (_, c, __) => UnreadBadge(
+                      count: c.unreadCount,
+                      child: const Icon(Icons.notifications_outlined),
+                    ),
+                  ),
+            label: 'Alerts',
+          ),
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.settings_outlined), label: 'Settings'),
         ],
       ),
+    );
+
+    // Share a single NotificationsController across the bottom-nav badge and
+    // the Alerts tab so they always show the same unread count.
+    if (user == null) return scaffold;
+    return ChangeNotifierProvider(
+      create: (_) => NotificationsController(userId: user.id)..load(),
+      child: scaffold,
     );
   }
 }

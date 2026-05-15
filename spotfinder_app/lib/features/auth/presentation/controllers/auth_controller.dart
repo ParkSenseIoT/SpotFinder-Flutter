@@ -81,6 +81,13 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Replace the cached user (e.g. after an Edit-Profile success) so every
+  /// screen that watches AuthController reflects the new name immediately.
+  void updateCachedUser(UserEntity user) {
+    _user = user;
+    notifyListeners();
+  }
+
   Future<bool> hasSession() => _repository.hasSession();
 
   void _setLoading(bool value) {

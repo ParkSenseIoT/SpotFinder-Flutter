@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../auth/presentation/screens/login_screen.dart';
 import '../../../notifications/presentation/screens/notification_preferences_screen.dart';
+import '../../../vehicles/presentation/screens/vehicles_screen.dart';
 import '../widgets/premium_upgrade_card.dart';
 import '../widgets/profile_header.dart';
 import '../widgets/settings_section.dart';
@@ -125,12 +126,9 @@ class SettingsScreen extends StatelessWidget {
                   icon: Icons.directions_car_outlined,
                   label: 'Mis vehículos',
                   subtitle: 'Placas registradas para reconocimiento',
-                  onTap: () => _showComingSoon(
+                  onTap: () => Navigator.push(
                     context,
-                    title: 'Mis vehículos',
-                    message:
-                        'La gestión de vehículos llegará en una próxima versión. '
-                        'Por ahora la placa se registra al crear tu cuenta.',
+                    MaterialPageRoute(builder: (_) => const VehiclesScreen()),
                   ),
                 ),
               ],

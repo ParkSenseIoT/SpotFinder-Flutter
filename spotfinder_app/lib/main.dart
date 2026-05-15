@@ -5,6 +5,7 @@ import 'core/theme/app_colors.dart';
 import 'features/auth/presentation/controllers/auth_controller.dart';
 import 'features/auth/presentation/screens/splash_screen.dart';
 
+//.
 void main() {
   runApp(const SpotFinderApp());
 }

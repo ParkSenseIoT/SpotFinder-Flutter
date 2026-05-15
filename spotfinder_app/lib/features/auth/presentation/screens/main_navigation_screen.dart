@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../parking/presentation/screens/parking_map_screen.dart';
 import '../controllers/auth_controller.dart';
 import 'login_screen.dart';
 
@@ -100,7 +101,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     final screens = <Widget>[
       _placeholder('Dashboard', Icons.dashboard_outlined),
-      _placeholder('Map', Icons.map_outlined),
+      const ParkingMapScreen(),
       _placeholder('Payments', Icons.payment_outlined),
       _placeholder('Alerts', Icons.notifications_outlined),
       _settingsPanel(context),

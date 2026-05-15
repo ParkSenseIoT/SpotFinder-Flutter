@@ -20,6 +20,10 @@ dependencies:
   # Simple state management
   provider: ^6.1.1
 
+  # STOMP-over-WebSocket client to receive live slot/occupancy updates
+  # published by the backend at /ws/parking (topics /topic/slots, /topic/occupancy)
+  stomp_dart_client: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

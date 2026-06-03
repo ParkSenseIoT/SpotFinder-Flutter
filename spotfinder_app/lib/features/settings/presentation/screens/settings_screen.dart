@@ -4,8 +4,12 @@ import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../auth/presentation/screens/login_screen.dart';
+import '../../../find_my_car/presentation/screens/find_my_car_screen.dart';
 import '../../../notifications/presentation/screens/notification_preferences_screen.dart';
+import '../../../premium_services/presentation/screens/premium_services_screen.dart';
+import '../../../reservations/presentation/screens/reservations_screen.dart';
 import '../../../vehicles/presentation/screens/vehicles_screen.dart';
+import '../../../wallet/presentation/screens/wallet_pass_screen.dart';
 import '../widgets/premium_upgrade_card.dart';
 import '../widgets/profile_header.dart';
 import '../widgets/settings_section.dart';
@@ -131,6 +135,24 @@ class SettingsScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (_) => const VehiclesScreen()),
                   ),
                 ),
+                SettingsTile(
+                  icon: Icons.bookmark_border,
+                  label: 'Mis reservas',
+                  subtitle: 'Reserva espacios con anticipación',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ReservationsScreen()),
+                  ),
+                ),
+                SettingsTile(
+                  icon: Icons.my_location,
+                  label: 'Find My Car',
+                  subtitle: 'Localiza tu vehículo en el estacionamiento',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const FindMyCarScreen()),
+                  ),
+                ),
               ],
             ),
 
@@ -143,6 +165,25 @@ class SettingsScreen extends StatelessWidget {
                   subtitle: 'Tus pagos anteriores',
                   onTap: () => _showFromTab(context,
                       message: 'Encuentra tu historial en la pestaña Payments.'),
+                ),
+                SettingsTile(
+                  icon: Icons.qr_code_2_outlined,
+                  label: 'Pase digital',
+                  subtitle: 'Google Wallet con tu sesión activa',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const WalletPassScreen()),
+                  ),
+                ),
+                SettingsTile(
+                  icon: Icons.workspace_premium_outlined,
+                  label: 'Servicios Premium',
+                  subtitle: 'Lavado, detailing y entrega de combustible',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const PremiumServicesScreen()),
+                  ),
                 ),
                 SettingsTile(
                   icon: Icons.history,

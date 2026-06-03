@@ -4,26 +4,30 @@ import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/payment_entity.dart';
 import '../../domain/entities/payment_status.dart';
 
-/// Row inside the payment history list.
+/// Row inside the payment history list. Tap pushes [PaymentDetailScreen] (US15).
 class PaymentHistoryTile extends StatelessWidget {
-  const PaymentHistoryTile({super.key, required this.payment});
+  const PaymentHistoryTile({super.key, required this.payment, this.onTap});
 
   final PaymentEntity payment;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final status = payment.status;
     final statusColor = _colorFor(status);
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceDark.withOpacity(0.7),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white12),
-      ),
-      child: Row(
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppColors.surfaceDark.withOpacity(0.7),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.white12),
+        ),
+        child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
@@ -106,6 +110,7 @@ class PaymentHistoryTile extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

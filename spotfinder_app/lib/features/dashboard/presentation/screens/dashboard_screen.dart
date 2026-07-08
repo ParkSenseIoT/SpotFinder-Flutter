@@ -13,6 +13,7 @@ import '../widgets/no_session_card.dart';
 import '../widgets/occupancy_pill.dart';
 import '../widgets/quick_action_grid.dart';
 import '../widgets/recent_notifications_card.dart';
+import '../widgets/verify_plate_button.dart';
 
 /// Driver-facing home screen. Aggregates the active session, occupancy summary,
 /// emergency banner, recent notifications and quick navigation actions.
@@ -107,6 +108,18 @@ class _DashboardView extends StatelessWidget {
               OccupancyPill(
                 summary: controller.occupancy,
                 onTap: () => onSwitchToTab(1),
+              ),
+              VerifyPlateButton(
+                onVerified: (plate) async {
+                  await controller.refresh();
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: const Color(0xFF22C55E),
+                      content: Text('Placa reconocida: $plate'),
+                    ),
+                  );
+                },
               ),
               QuickActionGrid(
                 onMap: () => onSwitchToTab(1),
